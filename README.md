@@ -36,5 +36,6 @@ ORM: iBATIS
 | 개발도구          | Eclipse                     |
 | 빌드툴            | Maven                       |
 | 프로그래밍 언어    | Java, JSP                  |
-| 프레임워크        | 전자정부 프레임워크, Spring  |
+| 프레임워크        | 전자정부 프레임워크         |
 | 데이터베이스      | MySQL                       |
+|ORM/DB 접근 기술   | iBATIS                      |
