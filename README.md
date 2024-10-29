@@ -35,70 +35,79 @@
 ---
 
 ## 😂실행결과
-- index.jap 파일 내에 기본 실행 페이지를 게시글 리스트 페이지로 설정
-![image](https://github.com/user-attachments/assets/6bac28f9-7b78-402e-a312-e0d9f94a7568)
-- 결과
-![image](https://github.com/user-attachments/assets/58a1c3f8-c5db-4efa-ab6e-ffc955b0842b)
+## 1. 기본 실행 페이지 설정
+- **설정**: `index.jsp` 파일 내에 기본 실행 페이지를 게시글 리스트 페이지로 설정
+- **결과**: 게시글 리스트가 기본으로 표시됨
+![게시글 리스트 페이지 결과](https://github.com/user-attachments/assets/58a1c3f8-c5db-4efa-ab6e-ffc955b0842b)
 
 ---
 
-- 게시글 작성 페이지
-![image](https://github.com/user-attachments/assets/9d485b51-7a25-444e-a9e2-1a34615c4b9a)
-![image](https://github.com/user-attachments/assets/fb3330dc-1715-4897-9024-9db9c324e8af)
-![image](https://github.com/user-attachments/assets/1a94e34c-0c2c-4c61-894b-65a692c70efb)
-- DB 조회
-![image](https://github.com/user-attachments/assets/0c83912b-1238-4db0-a6bf-6527a920a8e4)
-![image](https://github.com/user-attachments/assets/69c96689-9f62-42e1-840d-8759f992f889)
-- 파일 저장
-![image](https://github.com/user-attachments/assets/3ecab81b-12e2-4873-8aec-3a6bb7fee37b)
-D드라이브에 upload 파일에 저장하도록 구현
-![image](https://github.com/user-attachments/assets/909821c7-c347-4975-98fa-9f04a7d75574)
-파일 저장 확인
+## 2. 게시글 작성
+- **작성 페이지**: 게시글 작성 페이지 구현
+![게시글 작성 페이지](https://github.com/user-attachments/assets/9d485b51-7a25-444e-a9e2-1a34615c4b9a)
+![게시글 작성 중](https://github.com/user-attachments/assets/fb3330dc-1715-4897-9024-9db9c324e8af)
+![게시글 작성 완료](https://github.com/user-attachments/assets/1a94e34c-0c2c-4c61-894b-65a692c70efb)
+
+- **DB 조회**: 작성한 게시글을 데이터베이스에서 확인
+![DB 조회 결과](https://github.com/user-attachments/assets/0c83912b-1238-4db0-a6bf-6527a920a8e4)
+![게시글 목록 확인](https://github.com/user-attachments/assets/69c96689-9f62-42e1-840d-8759f992f889)
+
+- **파일 저장**: 게시글 작성 시 파일을 D 드라이브의 `upload` 폴더에 저장
+![파일 저장 확인](https://github.com/user-attachments/assets/3ecab81b-12e2-4873-8aec-3a6bb7fee37b)
+![파일 저장 경로 확인](https://github.com/user-attachments/assets/909821c7-c347-4975-98fa-9f04a7d75574)
 
 ---
 
-- 게시글 상세 페이지
-![image](https://github.com/user-attachments/assets/7f3cfb59-290b-4b05-88d6-32006ebabf9e)
-- 게시글 수정 중에 암호를 입력하지 않으면 업데이트를 할 수 없게 구현
-![image](https://github.com/user-attachments/assets/9bff2d10-68d8-414d-8091-d2de6b56e919)
-- 게시글 수정 후
-![image](https://github.com/user-attachments/assets/41d9b4ae-c2d3-4fce-bbdf-48387c9fa715)
-- DB 조회
-![image](https://github.com/user-attachments/assets/90d54160-f625-4a3f-82c8-641c09d5500a)
-게시글의 경우 수정 시, 수정한 날짜가 별도로 저장되게 구현
-![image](https://github.com/user-attachments/assets/eaa5bb43-e83e-408e-a49b-40d37dd2a3d9)
+## 3. 게시글 상세 페이지
+- **상세 페이지**: 게시글 상세 정보 표시
+![게시글 상세 페이지](https://github.com/user-attachments/assets/7f3cfb59-290b-4b05-88d6-32006ebabf9e)
+
+- **수정 기능**: 게시글 수정 시 암호를 입력하지 않으면 업데이트를 할 수 없도록 구현
+![수정 시 암호 입력 요구](https://github.com/user-attachments/assets/9bff2d10-68d8-414d-8091-d2de6b56e919)
+
+- **수정 후**: 수정된 게시글 확인
+![게시글 수정 후](https://github.com/user-attachments/assets/41d9b4ae-c2d3-4fce-bbdf-48387c9fa715)
+
+- **DB 조회**: 수정된 게시글 정보를 데이터베이스에서 확인
+![수정된 게시글 DB 조회](https://github.com/user-attachments/assets/90d54160-f625-4a3f-82c8-641c09d5500a)
+![수정된 날짜 확인](https://github.com/user-attachments/assets/eaa5bb43-e83e-408e-a49b-40d37dd2a3d9)
 
 ---
 
-- 파일 다운로드
-![image](https://github.com/user-attachments/assets/8db38d45-58e9-4180-aff3-c1e69a3fda0d)
-![image](https://github.com/user-attachments/assets/97cdaf70-84c6-4b5d-af71-9ead47cb7230)
+## 4. 파일 다운로드
+- **다운로드 기능**: 게시글에 첨부된 파일 다운로드 가능
+![파일 다운로드1](https://github.com/user-attachments/assets/8db38d45-58e9-4180-aff3-c1e69a3fda0d)
+![파일 다운로드2](https://github.com/user-attachments/assets/97cdaf70-84c6-4b5d-af71-9ead47cb7230)
 
 ---
 
-- 게시글 삭제
-![image](https://github.com/user-attachments/assets/5a1b14eb-5e46-44f4-9a2d-08f2c7717756)
-![image](https://github.com/user-attachments/assets/c9e1f7e7-855b-43a8-bdc3-0443ea10ff28)
-게시글 작성 시 입력했던 암호를 확인하여 삭제가 가능하도록 구현
-- DB 조회
-![image](https://github.com/user-attachments/assets/eb630d43-c85d-400d-8cc4-ee09b55af833)
-![image](https://github.com/user-attachments/assets/94c0ceea-bd31-45e6-8747-2c3433ddcde7)
-삭제 확인
+## 5. 게시글 삭제
+- **삭제 기능**: 게시글 삭제 시 입력한 암호 확인 후 삭제 가능
+![게시글 삭제1](https://github.com/user-attachments/assets/5a1b14eb-5e46-44f4-9a2d-08f2c7717756)
+![게시글 삭제2](https://github.com/user-attachments/assets/c9e1f7e7-855b-43a8-bdc3-0443ea10ff28)
+
+- **DB 조회**: 삭제 후 데이터베이스에서 확인
+![삭제된 게시글 DB 조회1](https://github.com/user-attachments/assets/eb630d43-c85d-400d-8cc4-ee09b55af833)
+![삭제된 게시글 DB 조회2](https://github.com/user-attachments/assets/94c0ceea-bd31-45e6-8747-2c3433ddcde7)
 
 ---
 
-- 검색
-![image](https://github.com/user-attachments/assets/bb7b5653-9dc8-4622-9fa5-3927de1d4023)
-11이 들어간 제목 조회
-![image](https://github.com/user-attachments/assets/eeee50fd-a50d-4383-996b-93ca01ff7097)
-
-- 페이징 처리
-![image](https://github.com/user-attachments/assets/b4f106f4-5759-486c-b7cd-e565d81239cc)
-![image](https://github.com/user-attachments/assets/090f462e-0b0b-47a4-90a8-746878e1dc56)
-게시글 번호가 10 이상으로 넘어갈 경우 10개씩 화면에 출력되도록 조정
+## 6. 검색 기능
+- **검색 기능**: 게시글 제목에 "11"이 포함된 게시글 조회
+![검색 기능1](https://github.com/user-attachments/assets/bb7b5653-9dc8-4622-9fa5-3927de1d4023)
+![검색 기능2](https://github.com/user-attachments/assets/eeee50fd-a50d-4383-996b-93ca01ff7097)
 
 ---
 
-- 게시글 내용에 개행처리
-![image](https://github.com/user-attachments/assets/7a5fcf3b-f4e8-44e8-88c2-0324b02bbd99)
-![image](https://github.com/user-attachments/assets/d1386486-3807-4d27-a248-e95855266872)
+## 7. 페이징 처리
+- **페이징 처리**: 게시글 번호가 10 이상일 경우 10개씩 화면에 출력
+![페이징 처리1](https://github.com/user-attachments/assets/b4f106f4-5759-486c-b7cd-e565d81239cc)
+![페이징 처리2](https://github.com/user-attachments/assets/090f462e-0b0b-47a4-90a8-746878e1dc56)
+
+---
+
+## 8. 게시글 내용 개행 처리
+- **개행 처리**: 게시글 내용에 개행이 적용되어 표시
+![개행 처리1](https://github.com/user-attachments/assets/7a5fcf3b-f4e8-44e8-88c2-0324b02bbd99)
+![개행 처리2](https://github.com/user-attachments/assets/d1386486-3807-4d27-a248-e95855266872)
+
