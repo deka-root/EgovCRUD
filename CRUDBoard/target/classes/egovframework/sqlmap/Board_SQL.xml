@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BoardSpace">
+
+	<typeAlias  alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BoardVO" type="com.lyr.main.service.BoardVO"/>
+	<typeAlias  alias="FileVO" type="com.lyr.main.service.FileVO"/>
+	
+	<resultMap id="board" class="com.lyr.main.service.BoardVO">
+		<result property="boardNo" column="board_no" />
+    	<result property="title" column="title" />
+    	<result property="pass" column="pass" />
+    	<result property="author" column="author" />
+    	<result property="content" column="content" />
+    	<result property="viewCount" column="view_count" />
+    	<result property="createdDate" column="createdDate" />
+    	<result property="updatedDate" column="updatedDate" />
+    	<result property="file.fileNo" column="file_no" />
+    	<result property="file.fileName" column="file_name" />
+    	<result property="file.filePath" column="file_path" />
+    	<result property="file.uploadDate" column="upload_date" />
+	</resultMap>
+	
+	<resultMap id="file" class="com.lyr.main.service.FileVO">
+    	<result property="fileNo" column="file_no" />
+    	<result property="fileName" column="file_name" />
+    	<result property="filePath" column="file_path" />
+    	<result property="uploadDate" column="upload_date" />
+    	<result property="boardNo" column="board_no" />
+	</resultMap>
+	
+	<!-- 게시글 insert문 -->
+	<insert id="boardDAO.insertBoard">
+		INSERT INTO board ( title, pass, author, content, view_count, created_date, updated_date )
+		VALUES
+			( #title#, #pass#, #author#, #content#, 0, CURRENT_TIMESTAMP, NULL )
+	</insert>
+	
+	<!-- 자동 증가 ID 가져오기 -->
+	<select id="boardDAO.getLastInsertedBoardNo" resultClass="java.lang.Integer">
+    	SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="boardDAO.getLastInsertedFileNo" resultClass="java.lang.Integer">
+    	SELECT LAST_INSERT_ID()
+	</select>
+	
+	<!-- 게시물 파일 insert문 -->
+	<insert id="boardDAO.insertFile" parameterClass="FileVO">
+		INSERT INTO files ( file_name, file_path, upload_date, board_no )
+		VALUES
+			( #fileName#, #filePath#, CURRENT_TIMESTAMP, #boardNo:INTEGER# )
+	</insert>
+	
+	<!-- 게시글 select문 -->
+	<select id="boardDAO.selectBoardList" resultClass="egovMap" parameterClass="BoardVO">
+    	SELECT 
+        	board_no, 
+        	title, 
+        	author, 
+        	view_count, 
+        	DATE_FORMAT(created_date, '%Y-%m-%d') AS createdDate	<!-- 시간 출력 제외 -->
+        	
+    	FROM
+        	board
+        	
+        <isNotNull property="searchBox">
+        	<isNotNull property="searchText">
+        		WHERE 
+            		( #searchBox# = 'title' AND title LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'author' AND author LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'content' AND content LIKE CONCAT('%', #searchText#, '%') )
+            </isNotNull>
+    	</isNotNull>
+
+    	ORDER BY
+        	board_no DESC
+        LIMIT
+        	#start#, #pageSize#
+	</select>
+	
+	<select id="boardDAO.selectBoardTotal" resultClass="java.lang.Integer">
+		SELECT COUNT(*) total FROM board
+		<isNotNull property="searchBox">
+        	<isNotNull property="searchText">
+        		WHERE 
+            		( #searchBox# = 'title' AND title LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'author' AND author LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'content' AND content LIKE CONCAT('%', #searchText#, '%') )
+            </isNotNull>
+    	</isNotNull>
+	</select>
+    
+	<select id="boardDAO.selectBoardDetail" resultClass="BoardVO">
+    SELECT
+        b.board_no AS boardNo,
+        b.title,
+        b.pass,
+        b.author,
+        b.content,
+        b.view_count,
+        DATE_FORMAT(b.created_date, '%Y-%m-%d') AS createdDate,
+        DATE_FORMAT(b.updated_date, '%Y-%m-%d') AS updatedDate,
+        f.file_no AS fileNo,
+        f.file_name AS fileName,
+        f.file_path AS filePath,
+        f.upload_date AS uploadDate
+    FROM
+        board b
+    LEFT JOIN
+        files f ON b.board_no = f.board_no
+    WHERE
+        b.board_no = #boardNo#
+</select>
+
+
+<select id="boardDAO.selectFile" resultClass="FileVO">
+    SELECT
+		file_no AS fileNo,
+    	file_name AS fileName,
+    	file_path AS filePath,
+    	DATE_FORMAT(upload_date, '%Y-%m-%d') AS uploadDate,
+    	board_no AS boardNo
+    FROM
+        files
+    WHERE
+        board_no = #boardNo#
+</select>
+	
+	<update id="boardDAO.updateBoardCount">
+		UPDATE
+			board
+		SET
+			view_count = view_count + 1
+		WHERE
+			board_no = #boardNo#
+	</update>
+	
+	<update id="boardDAO.updateBoard">
+		UPDATE
+			board
+		SET
+			title = #title#,
+			author = #author#,
+			content = #content#,
+			updated_date = CURRENT_TIMESTAMP	<!-- 수정일 등록 -->
+		WHERE
+			board_no = #boardNo#
+	</update>
+	
+	<update id="boardDAO.updateFile">
+    	UPDATE
+        	files
+    	SET
+        	file_name = #fileName#,
+        	file_path = #filePath#,
+        	upload_date = CURRENT_TIMESTAMP
+    	WHERE
+        	file_no = #fileNo#
+	</update>
+	
+	<select id="boardDAO.selectBoardPass" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			board
+		WHERE
+			board_no = #boardNo# AND pass = #pass#
+	</select>
+	
+	<delete id="boardDAO.deleteBoard">
+		DELETE FROM board
+					WHERE board_no = #boardNo# AND pass=#pass#
+					
+	</delete>
+	
+	<delete id="boardDAO.deleteFile">
+		DELETE FROM files
+					WHERE board_no = #boardNo# AND file_no = #fileNo#
+					
+	</delete>
+	
+</sqlMap>

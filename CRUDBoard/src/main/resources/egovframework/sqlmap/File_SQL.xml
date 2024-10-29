@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="FileSpace">
+
+	<typeAlias  alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="FileVO" type="com.lyr.main.service.FileVO"/>
+	
+	<resultMap id="file" class="com.lyr.main.service.FileVO">
+		<result property="fileNo" column="file_no"/>
+		<result property="fileName" column="file_name"/>
+		<result property="filePath" column="file_path"/>
+		<result property="uploadDate" column="upload_date"/>
+		<result property="boardNo" column="board_no"/>
+	</resultMap>
+	
+	<resultMap id="board" class="com.lyr.main.service.BoardVO">
+		<result property="boardNo" column="board_no"/>
+	</resultMap>
+	
+	<!-- 게시글 insert문 -->
+	<insert id="boardDAO.insertFile">
+		INSERT INTO files ( file_no, file_name, file_path, upload_date, board_no )
+		VALUES
+			( #fileName#, #filePath#, CURRENT_TIMESTAMP, #boardNo# )
+	</insert>
+	
+	<!-- 게시글 select문 -->
+	<select id="boardDAO.selectBoardList" resultClass="egovMap" parameterClass="BoardVO">
+    	SELECT 
+        	board_no, 
+        	title, 
+        	author, 
+        	view_count, 
+        	DATE_FORMAT(created_date, '%Y-%m-%d') AS createdDate	<!-- 시간 출력 제외 -->
+    	FROM
+        	board
+        	
+        <isNotNull property="searchBox">
+        	<isNotNull property="searchText">
+        		WHERE 
+            		( #searchBox# = 'title' AND title LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'author' AND author LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'content' AND content LIKE CONCAT('%', #searchText#, '%') )
+            </isNotNull>
+    	</isNotNull>
+
+    	ORDER BY
+        	board_no DESC
+        LIMIT
+        	#start#, #pageSize#
+	</select>
+	
+	<select id="boardDAO.selectBoardTotal" resultClass="java.lang.Integer">
+		SELECT COUNT(*) total FROM board
+		<isNotNull property="searchBox">
+        	<isNotNull property="searchText">
+        		WHERE 
+            		( #searchBox# = 'title' AND title LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'author' AND author LIKE CONCAT('%', #searchText#, '%') )
+            		OR ( #searchBox# = 'content' AND content LIKE CONCAT('%', #searchText#, '%') )
+            </isNotNull>
+    	</isNotNull>
+	</select>
+    
+	<select id="boardDAO.selectBoardDetail" resultClass="BoardVO">
+    	SELECT
+    		board_no AS boardNo,
+        	title,
+        	pass,
+        	author,
+        	content,
+        	view_count,
+        	DATE_FORMAT(created_date, '%Y-%m-%d') AS createdDate,
+        	DATE_FORMAT(updated_date, '%Y-%m-%d') AS updatedDate 
+    	FROM
+        	board
+    	WHERE
+        	board_no = #boardNo#
+	</select>
+	
+	<update id="boardDAO.updateBoardCount">
+		UPDATE
+			board
+		SET
+			view_count = view_count + 1
+		WHERE
+			board_no = #boardNo#
+	</update>
+	
+	<update id="boardDAO.updateBoard">
+		UPDATE
+			board
+		SET
+			title = #title#,
+			author = #author#,
+			content = #content#,
+			updated_date = CURRENT_TIMESTAMP	<!-- 수정일 등록 -->
+		WHERE
+			board_no = #boardNo#
+	</update>
+	
+	<select id="boardDAO.selectBoardPass" resultClass="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			board
+		WHERE
+			board_no = #boardNo# AND pass = #pass#
+	</select>
+	
+	<delete id="boardDAO.deleteBoard">
+		DELETE FROM board
+					WHERE board_no = #boardNo# AND pass=#pass#
+					
+	</delete>
+	
+
+</sqlMap>

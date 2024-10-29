@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="BoardSpace">
+
+	<typeAlias  alias="egovMap" type="org.egovframe.rte.psl.dataaccess.util.EgovMap"/>
+	<typeAlias  alias="BoardVO" type="com.lyr.main.service.BoardVO"/>
+	
+	<resultMap id="board" class="com.lyr.main.service.BoardVO">
+		<result property="boardNo" column="board_no"/>
+		<result property="title" column="title"/>
+		<result property="pass" column="pass"/>
+		<result property="author" column="author"/>
+		<result property="content" column="content"/>
+		<result property="viewCount" column="view_count"/>
+		<result property="createdDate" column="created_date"/>
+		<result property="updatedDate" column="updated_date"/>
+	</resultMap>
+	
+	<insert id="boardDAO.insertBoard">
+		INSERT INTO board 
+			( title, pass, author, content, view_count, created_date )
+		VALUES
+			( #title#, #pass#, #author#, #content#, #viewCount#, CURRENT_TIMESTAMP )
+	</insert>
+    
+
+</sqlMap>
