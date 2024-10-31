@@ -37,7 +37,7 @@
 ## 😂실행결과
 ## 1. 기본 실행 페이지 설정
 - **설정**: `index.jsp` 파일 내에 기본 실행 페이지를 게시글 리스트 페이지로 설정
-- ![index.jsp 설정](https://github.com/user-attachments/assets/f8e99dd5-e0ae-41af-86ef-b3c30f90adb9)
+![index.jsp 설정](https://github.com/user-attachments/assets/f8e99dd5-e0ae-41af-86ef-b3c30f90adb9)
 
 - **결과**: 게시글 리스트가 기본으로 표시됨
 ![게시글 리스트 페이지 결과](https://github.com/user-attachments/assets/58a1c3f8-c5db-4efa-ab6e-ffc955b0842b)
